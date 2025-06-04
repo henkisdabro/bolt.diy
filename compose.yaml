@@ -3,7 +3,6 @@ services:
       image: bolt-ai:development
       build:
         target: bolt-ai-development
-      container_name: bolt-ai
       env_file:
         - stack.env
       networks:
