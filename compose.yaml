@@ -1,3 +1,4 @@
+name: boltdiy
 services:
   bolt:
     image: ghcr.io/stackblitz-labs/bolt.diy:latest
@@ -11,8 +12,6 @@ services:
     ports:
       - "5173:5173"
     command: pnpm run dockerstart
-    profiles:
-      - prebuilt
 
 networks:
   homelabnetwork:
