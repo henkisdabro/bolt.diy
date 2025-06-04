@@ -1,16 +1,65 @@
 services:
+  app-prod:
+    image: bolt-ai:production
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: bolt-ai-production
+    ports:
+      - '5173:5173'
+    env_file:
+      - stack.env
+    networks:
+      - homelabnetwork
+    environment:
+      - NODE_ENV=production
+      - COMPOSE_PROFILES=production
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    command: pnpm run dockerstart
+    profiles:
+      - production
+
+  app-dev:
+    image: bolt-ai:development
+    build:
+      target: bolt-ai-development
+    env_file: '.env.local'
+    environment:
+      - NODE_ENV=development
+      - VITE_HMR_PROTOCOL=ws
+      - VITE_HMR_HOST=localhost
+      - VITE_HMR_PORT=5173
+      - VITE_LOG_LEVEL=${VITE_LOG_LEVEL:-debug}
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+        consistency: cached
+      - /app/node_modules
+    ports:
+      - '5173:5173'
+    command: pnpm run dev --host 0.0.0.0
+    profiles: ['development', 'default']
+
   app-prebuild:
       image: ghcr.io/stackblitz-labs/bolt.diy:latest
       container_name: bolt-ai
       env_file:
         - stack.env
+      environment:
+        - NODE_ENV=production
+        - COMPOSE_PROFILES=production
       networks:
         - homelabnetwork
       ports:
         - "5173:5173"
       extra_hosts:
         - "host.docker.internal:host-gateway"   
-
       command: pnpm run dockerstart
       profiles:
         - prebuilt
