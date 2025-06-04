@@ -6,6 +6,8 @@ services:
         dockerfile: Dockerfile
         target: bolt-ai-production
       container_name: bolt-ai
+      env_file:
+        - stack.env
       networks:
         - homelabnetwork
       ports:
