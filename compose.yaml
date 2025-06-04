@@ -1,10 +1,7 @@
 services:
-  app-dev:
-      image: bolt-ai:development
-      build:
-        context: .
-        dockerfile: Dockerfile
-        target: bolt-ai-development
+  app-prebuild:
+      image: ghcr.io/stackblitz-labs/bolt.diy:latest
+      container_name: bolt-ai
       env_file:
         - stack.env
       networks:
@@ -13,14 +10,10 @@ services:
         - "5173:5173"
       extra_hosts:
         - "host.docker.internal:host-gateway"   
-      volumes:
-        - type: bind
-          source: .
-          target: /app
-          consistency: cached
-        - /app/node_modules   
-      command: pnpm run dev --host 0.0.0.0
-      profiles: ['development', 'default']
+
+      command: pnpm run dockerstart
+      profiles:
+        - prebuilt
 
 networks:
   homelabnetwork:
