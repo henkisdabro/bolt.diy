@@ -1,17 +1,18 @@
-bolt-ai:
-    image: bolt-ai:production
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: bolt-ai-production
-    container_name: bolt-ai
-    networks:
-      - homelabnetwork
-    ports:
-      - "5173:5173"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"      
-    command: pnpm run dockerstart
+services:
+  bolt-ai:
+      image: bolt-ai:production
+      build:
+        context: .
+        dockerfile: Dockerfile
+        target: bolt-ai-production
+      container_name: bolt-ai
+      networks:
+        - homelabnetwork
+      ports:
+        - "5173:5173"
+      extra_hosts:
+        - "host.docker.internal:host-gateway"      
+      command: pnpm run dockerstart
 
 networks:
   homelabnetwork:
