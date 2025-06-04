@@ -1,18 +1,18 @@
 services:
   bolt:
-      image: ghcr.io/stackblitz-labs/bolt.diy:latest
-      container_name: bolt-ai
-      env_file:
-        - stack.env
-      environment:
-        - NODE_ENV=production
-      networks:
-        - homelabnetwork
-      ports:
-        - "5173:5173"
-      command: pnpm run dockerstart
-      profiles:
-        - prebuilt
+    image: ghcr.io/stackblitz-labs/bolt.diy:latest
+    container_name: bolt-ai
+    env_file:
+      - stack.env
+    environment:
+      - NODE_ENV=production
+    networks:
+      - homelabnetwork
+    ports:
+      - "5173:5173"
+    command: pnpm run dockerstart
+    profiles:
+      - prebuilt
 
 networks:
   homelabnetwork:
