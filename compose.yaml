@@ -1,7 +1,10 @@
 services:
   app-dev:
       image: bolt-ai:development
+      container_name: bolt-diy
       build:
+        context: .
+        dockerfile: Dockerfile
         target: bolt-ai-development
       env_file:
         - stack.env
