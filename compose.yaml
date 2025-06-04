@@ -1,10 +1,10 @@
 services:
-  bolt-ai:
-      image: bolt-ai:production
+  app-dev:
+      image: bolt-ai:development
       build:
         context: .
         dockerfile: Dockerfile
-        target: bolt-ai-production
+        target: bolt-ai-development
       container_name: bolt-ai
       env_file:
         - stack.env
@@ -13,8 +13,14 @@ services:
       ports:
         - "5173:5173"
       extra_hosts:
-        - "host.docker.internal:host-gateway"      
-      command: pnpm run dockerstart
+        - "host.docker.internal:host-gateway"   
+      volumes:
+        - type: bind
+          source: .
+          target: /app
+          consistency: cached
+        - /app/node_modules   
+      command: pnpm run dev --host 0.0.0.0
 
 networks:
   homelabnetwork:
