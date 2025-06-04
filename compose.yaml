@@ -53,7 +53,7 @@ services:
         - stack.env
       environment:
         - NODE_ENV=production
-        - COMPOSE_PROFILES=production
+        - COMPOSE_PROFILES=prebuilt
       networks:
         - homelabnetwork
       ports:
