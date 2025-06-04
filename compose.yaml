@@ -2,8 +2,6 @@ services:
   app-dev:
       image: bolt-ai:development
       build:
-        context: .
-        dockerfile: Dockerfile
         target: bolt-ai-development
       container_name: bolt-ai
       env_file:
@@ -21,6 +19,7 @@ services:
           consistency: cached
         - /app/node_modules   
       command: pnpm run dev --host 0.0.0.0
+      profiles: ['development', 'default']
 
 networks:
   homelabnetwork:
