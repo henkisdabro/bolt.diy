@@ -7,14 +7,14 @@ services:
       - stack.env
     environment:
       - NODE_ENV=production
-    networks:
-      - homelabnetwork
+#    networks:
+#      - homelabnetwork
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:
       - "5173:5173"
     command: pnpm run dockerstart
 
-networks:
-  homelabnetwork:
-    external: true
+#networks:
+#  homelabnetwork:
+#    external: true
